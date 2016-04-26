@@ -10,17 +10,23 @@ class ApplicationHelper::Toolbar::CustomButtonSetCenter < ApplicationHelper::Too
           :ab_group_new,
           'pficon pficon-add-circle-o fa-lg',
           t = N_('Add a new Button Group'),
-          t),
+          t,
+          :klass => ApplicationHelper::Button::CustomButton
+          ),
         button(
           :ab_button_new,
           'pficon pficon-add-circle-o fa-lg',
           t = N_('Add a new Button'),
-          t),
+          t,
+          :klass => ApplicationHelper::Button::CustomButton,
+          ),
         button(
           :ab_group_reorder,
           'pficon pficon-edit fa-lg-assign',
           N_('Reorder #{x_active_tree == :ab_tree ? "Buttons Groups" : "Buttons and Groups"}'),
-          N_('Reorder')),
+          N_('Reorder'),
+          :klass => ApplicationHelper::Button::CustomButton,
+          ),
       ]
     ),
   ])
