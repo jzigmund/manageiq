@@ -1,4 +1,5 @@
 class ApplicationHelper::Button::Basic < Hash
+  include ApplicationHelper
   def initialize(view_context, view_binding, instance_data, props)
     @view_context  = view_context
     @view_binding  = view_binding

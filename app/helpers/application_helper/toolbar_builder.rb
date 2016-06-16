@@ -37,6 +37,7 @@ class ApplicationHelper::ToolbarBuilder
   end
 
   def build_toolbar(tb_name)
+    puts "TB " + tb_name
     toolbar = tb_name == "custom_buttons_tb" ? build_custom_buttons_toolbar(@record) : generic_toolbar(tb_name)
     build(toolbar)
   end
@@ -78,13 +79,13 @@ class ApplicationHelper::ToolbarBuilder
       end
       build_toolbar_save_button(bsi, props) unless bsi.key?(:separator)
       current_item[:items] << props unless props.skip?
-
       any_visible ||= !props[:hidden] && props[:type] != :separator
     end
     current_item[:items].reverse_each do |item|
       break if !item[:hidden] && item[:type] != :separator
       item[:hidden] = true if item[:type] == :separator
     end
+    any_visible = !current_item[:items].empty?
     current_item[:hidden] = !any_visible
 
     if bs_children
@@ -648,6 +649,7 @@ class ApplicationHelper::ToolbarBuilder
                     !role_allows(:feature => "ems_infra_scale") ||
                    (@record.class == ManageIQ::Providers::Openstack::InfraManager && @record.orchestration_stacks.count == 0))
 
+    puts "REC - " + get_record_cls(@record)
     # Now check model/record specific rules
     case get_record_cls(@record)
     when "AssignedServerRole"
@@ -875,8 +877,6 @@ class ApplicationHelper::ToolbarBuilder
       end
     when "NilClass"
       case id
-      when "ab_group_new", "ab_button_new", "ab_group_reorder"
-        return !role_allows_button_manipulation if x_active_tree == :sandt_tree
       when "action_new"
         return true unless role_allows(:feature => "action_new")
       when "alert_profile_new"
